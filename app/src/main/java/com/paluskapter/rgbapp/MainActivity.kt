@@ -9,28 +9,28 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.doAsync
 import java.net.URL
-import android.widget.LinearLayout
-import com.skydoves.colorpickerview.ColorListener
-import org.jetbrains.anko.info
 
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
+    val protocol = "http"
+    val host = "192.168.0.8"
+    val port = 5000
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home -> {
+            R.id.navigation_color -> {
                 colorLayout.visibility = View.VISIBLE
                 modeLayout.visibility = View.INVISIBLE
                 settingsLayout.visibility = View.INVISIBLE
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
+            R.id.navigation_mode -> {
                 colorLayout.visibility = View.INVISIBLE
                 modeLayout.visibility = View.VISIBLE
                 settingsLayout.visibility = View.INVISIBLE
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
+            R.id.navigation_settings -> {
                 colorLayout.visibility = View.INVISIBLE
                 modeLayout.visibility = View.INVISIBLE
                 settingsLayout.visibility = View.VISIBLE
@@ -46,21 +46,41 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        colorButton.setOnClickListener {
-            doAsync {
-                resultBox.text = URL("http://192.168.0.8:5000/instant_color/${red.text}/${green.text}/${blue.text}").readText()
-            }
-        }
+        navigation.selectedItemId = R.id.navigation_mode
 
         rainbowButton.setOnClickListener {
             doAsync {
-                resultBox.text = URL("http://192.168.0.8:5000/rainbow").readText()
+                URL(protocol, host, port, "/rainbow").readText()
+            }
+        }
+
+        rainbowColorWipeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/rainbow_color_wipe").readText()
+            }
+        }
+
+        rainbowFadeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/rainbow_fade").readText()
+            }
+        }
+
+        voltageDropButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/voltage_drop").readText()
+            }
+        }
+
+        clearButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/clear").readText()
             }
         }
 
         colorPickerView.setColorListener { color ->
             doAsync {
-                resultBoxPicker.text = URL("http://192.168.0.8:5000/instant_color/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}").readText()
+                URL(protocol, host, port, "/instant_color/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}").readText()
             }
             colorDisplay.setBackgroundColor(color)
         }
