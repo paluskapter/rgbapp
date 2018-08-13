@@ -8,4 +8,7 @@
     <string name="rainbow_fade">Rainbow fade</string>
     <string name="voltage_drop">Voltage drop</string>
     <string name="clear">Clear</string>
+    <string name="left">Left</string>
+    <string name="right">Right</string>
+    <string name="both">Both</string>
 </resources>

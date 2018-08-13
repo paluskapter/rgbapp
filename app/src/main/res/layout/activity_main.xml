@@ -36,17 +36,89 @@
             app:selector="@drawable/wheel" />
 
         <LinearLayout
-            android:layout_width="52dp"
+            android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="24dp"
-            android:background="@android:color/black"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@android:color/black"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/colorDisplay1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="24dp"
+                android:layout_height="0dp" />
+
+            <LinearLayout
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@android:color/black"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/colorDisplay2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/colorgroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/color1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/left" />
+
+            <Space
+                android:layout_width="24dp"
+                android:layout_height="0dp" />
+
+            <RadioButton
+                android:id="@+id/color2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:enabled="false"
+                android:text="@string/right" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:gravity="center">
 
-            <View
-                android:id="@+id/colorDisplay"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="#3fe1fa" />
+            <CheckBox
+                android:id="@+id/both"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/both" />
+
         </LinearLayout>
 
     </LinearLayout>

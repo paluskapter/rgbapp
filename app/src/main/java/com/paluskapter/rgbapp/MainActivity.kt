@@ -1,6 +1,7 @@
 package com.paluskapter.rgbapp
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
@@ -78,11 +79,56 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             }
         }
 
-        colorPickerView.setColorListener { color ->
-            doAsync {
-                URL(protocol, host, port, "/instant_color/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}").readText()
+        colorPickerView.setColorListener { c ->
+            when {
+                both.isChecked -> {
+                    doAsync {
+                        URL(protocol, host, port, "/instant_color/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+                    }
+                    colorDisplay1.setBackgroundColor(c)
+                    colorDisplay2.setBackgroundColor(c)
+                }
+
+                color1.isChecked -> {
+                    val c2 = (colorDisplay2.background as ColorDrawable).color
+                    doAsync {
+                        URL(protocol, host, port, "/gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+                    }
+                    colorDisplay1.setBackgroundColor(c)
+                }
+
+                color2.isChecked -> {
+                    val c2 = (colorDisplay1.background as ColorDrawable).color
+                    doAsync {
+                        URL(protocol, host, port, "/gradient/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
+                    }
+                    colorDisplay2.setBackgroundColor(c)
+                }
             }
-            colorDisplay.setBackgroundColor(color)
+        }
+
+        both.setOnClickListener {
+            if (both.isChecked) {
+                color1.isEnabled = false
+                color2.isEnabled = false
+                colorgroup.clearCheck()
+            } else {
+                color1.isEnabled = true
+                color2.isEnabled = true
+                color1.isChecked = true
+            }
+        }
+
+        colorDisplay1.setOnClickListener {
+            if (!both.isChecked) {
+                color1.isChecked = true
+            }
+        }
+
+        colorDisplay2.setOnClickListener {
+            if (!both.isChecked) {
+                color2.isChecked = true
+            }
         }
     }
 }
