@@ -161,6 +161,20 @@
             android:text="@string/voltage_drop" />
 
         <Button
+            android:id="@+id/randomFadeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/random_fade" />
+
+        <Button
+            android:id="@+id/strobeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/strobe" />
+
+        <Button
             android:id="@+id/clearButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -177,6 +191,45 @@
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:labelFor="@+id/protocolEdit"
+            android:text="@string/protocol" />
+
+        <EditText
+            android:id="@+id/protocolEdit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:labelFor="@+id/hostEdit"
+            android:text="@string/host" />
+
+        <EditText
+            android:id="@+id/hostEdit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:labelFor="@+id/portEdit"
+            android:text="@string/port" />
+
+        <EditText
+            android:id="@+id/portEdit"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
 
     </LinearLayout>
 

@@ -5,17 +5,22 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.doAsync
 import java.net.URL
+import kotlin.properties.Delegates
 
 
 class MainActivity : AppCompatActivity(), AnkoLogger {
-    val protocol = "http"
-    val host = "192.168.0.8"
-    val port = 5000
+    var prefs: Prefs? = null
+
+    var protocol: String by Delegates.notNull()
+    var host: String by Delegates.notNull()
+    var port: Int by Delegates.notNull()
 
     var firstRun = true
 
@@ -47,6 +52,16 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        prefs = Prefs(this)
+        protocol = prefs!!.protocol
+        host = prefs!!.host
+        port = prefs!!.port
+
+        protocolEdit.setText(protocol)
+        hostEdit.setText(host)
+        portEdit.setText(port.toString())
+
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         navigation.selectedItemId = R.id.navigation_mode
@@ -72,6 +87,18 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         voltageDropButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/voltage_drop").readText()
+            }
+        }
+
+        randomFadeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/random_fade").readText()
+            }
+        }
+
+        strobeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/strobe").readText()
             }
         }
 
@@ -136,5 +163,41 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 color2.isChecked = true
             }
         }
+
+        protocolEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val newText = protocolEdit.text.toString()
+                prefs!!.protocol = newText
+                protocol = newText
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+
+        hostEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val newText = hostEdit.text.toString()
+                prefs!!.host = newText
+                host = newText
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+
+        portEdit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val newText = portEdit.text.toString().toInt()
+                prefs!!.port = newText
+                port = newText
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
     }
 }

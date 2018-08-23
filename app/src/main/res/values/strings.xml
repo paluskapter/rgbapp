@@ -11,4 +11,9 @@
     <string name="left">Left</string>
     <string name="right">Right</string>
     <string name="both">Both</string>
+    <string name="random_fade">Random fade</string>
+    <string name="strobe">Strobe</string>
+    <string name="protocol">Protocol:</string>
+    <string name="host">Host:</string>
+    <string name="port">Port:</string>
 </resources>
