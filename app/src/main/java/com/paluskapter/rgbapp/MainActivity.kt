@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     val host = "192.168.0.8"
     val port = 5000
 
+    var firstRun = true
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_color -> {
@@ -80,30 +82,34 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         }
 
         colorPickerView.setColorListener { c ->
-            when {
-                both.isChecked -> {
-                    doAsync {
-                        URL(protocol, host, port, "/instant_color/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+            if (!firstRun) {
+                when {
+                    both.isChecked -> {
+                        doAsync {
+                            URL(protocol, host, port, "/instant_color/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+                        }
+                        colorDisplay1.setBackgroundColor(c)
+                        colorDisplay2.setBackgroundColor(c)
                     }
-                    colorDisplay1.setBackgroundColor(c)
-                    colorDisplay2.setBackgroundColor(c)
-                }
 
-                color1.isChecked -> {
-                    val c2 = (colorDisplay2.background as ColorDrawable).color
-                    doAsync {
-                        URL(protocol, host, port, "/gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+                    color1.isChecked -> {
+                        val c2 = (colorDisplay2.background as ColorDrawable).color
+                        doAsync {
+                            URL(protocol, host, port, "/gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+                        }
+                        colorDisplay1.setBackgroundColor(c)
                     }
-                    colorDisplay1.setBackgroundColor(c)
-                }
 
-                color2.isChecked -> {
-                    val c2 = (colorDisplay1.background as ColorDrawable).color
-                    doAsync {
-                        URL(protocol, host, port, "/gradient/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
+                    color2.isChecked -> {
+                        val c2 = (colorDisplay1.background as ColorDrawable).color
+                        doAsync {
+                            URL(protocol, host, port, "/gradient/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
+                        }
+                        colorDisplay2.setBackgroundColor(c)
                     }
-                    colorDisplay2.setBackgroundColor(c)
                 }
+            } else {
+                firstRun = false
             }
         }
 
