@@ -11,8 +11,8 @@
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -115,72 +115,134 @@
                 android:checked="true" />
 
             <TextView
+                android:id="@+id/segg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/both" />
-
         </LinearLayout>
 
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_marginTop="24dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:max="255" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/modeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:baselineAligned="false"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:visibility="invisible"
         app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/rainbowButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/rainbow" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/rainbowColorWipeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/rainbow_color_wipe" />
+            <Button
+                android:id="@+id/rainbowButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/rainbow" />
 
-        <Button
-            android:id="@+id/rainbowFadeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/rainbow_fade" />
+            <Button
+                android:id="@+id/rainbowColorWipeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/rainbow_color_wipe" />
 
-        <Button
-            android:id="@+id/voltageDropButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/voltage_drop" />
+            <Button
+                android:id="@+id/rainbowFadeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/rainbow_fade" />
 
-        <Button
-            android:id="@+id/randomFadeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/random_fade" />
+            <Button
+                android:id="@+id/voltageDropButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/voltage_drop" />
 
-        <Button
-            android:id="@+id/strobeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/strobe" />
+            <Button
+                android:id="@+id/randomFadeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/random_fade" />
 
-        <Button
-            android:id="@+id/clearButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/clear" />
+            <Button
+                android:id="@+id/strobeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/strobe" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/cometButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:text="@string/comet" />
+
+            <Button
+                android:id="@+id/fireButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/fire" />
+
+            <Button
+                android:id="@+id/musicButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:text="@string/music" />
+
+            <Button
+                android:id="@+id/snakeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/snake" />
+
+            <Button
+                android:id="@+id/rainbowSnakeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:enabled="false"
+                android:text="@string/snake_rainbow" />
+
+            <Button
+                android:id="@+id/clearButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/clear" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -203,7 +265,9 @@
             android:id="@+id/protocolEdit"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:targetApi="o" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -216,7 +280,9 @@
             android:id="@+id/hostEdit"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:targetApi="o" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -229,8 +295,9 @@
             android:id="@+id/portEdit"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-
+            android:importantForAutofill="no"
+            android:inputType="number"
+            tools:targetApi="o" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

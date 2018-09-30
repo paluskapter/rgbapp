@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.SeekBar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.doAsync
@@ -15,7 +16,7 @@ import java.net.URL
 import kotlin.properties.Delegates
 
 
-class MainActivity : AppCompatActivity(), AnkoLogger {
+class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeListener {
     var prefs: Prefs? = null
 
     var protocol: String by Delegates.notNull()
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
         strobeButton.setOnClickListener {
             doAsync {
-                URL(protocol, host, port, "/strobe").readText()
+                URL(protocol, host, port, "/strobe/300").readText()
             }
         }
 
@@ -107,6 +108,40 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
                 URL(protocol, host, port, "/clear").readText()
             }
         }
+
+        cometButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/comet").readText()
+            }
+        }
+
+        fireButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/fire").readText()
+            }
+        }
+
+        musicButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/music").readText()
+            }
+        }
+
+        snakeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/snake").readText()
+            }
+        }
+
+        rainbowSnakeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/snake_rainbow").readText()
+            }
+        }
+
+        seekBar!!.setOnSeekBarChangeListener(this)
+
+
 
         colorPickerView.setColorListener { c ->
             if (!firstRun) {
@@ -200,4 +235,15 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             override fun afterTextChanged(p0: Editable?) {}
         })
     }
+
+    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+        val c = progress.toString()
+        doAsync {
+            URL(protocol, host, port, "/instant_color/$c/$c/$c").readText()
+        }
+    }
+
+    override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+    override fun onStopTrackingTouch(seekBar: SeekBar) {}
 }

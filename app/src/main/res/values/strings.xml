@@ -16,4 +16,9 @@
     <string name="protocol">Protocol:</string>
     <string name="host">Host:</string>
     <string name="port">Port:</string>
+    <string name="comet">Comet</string>
+    <string name="fire">Fire</string>
+    <string name="snake">Snake</string>
+    <string name="snake_rainbow">Rainbow snake</string>
+    <string name="music">Music</string>
 </resources>
