@@ -27,13 +27,27 @@
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.skydoves.colorpickerview.ColorPickerView
-            android:id="@+id/colorPickerView"
+        <com.divyanshu.colorseekbar.ColorSeekBar
+            android:id="@+id/colorSeekBar"
             android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="24dp"
-            app:palette="@drawable/palette"
-            app:selector="@drawable/wheel" />
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:barHeight="12dp"
+            app:colorSeeds="@array/colorSeekBarColors"
+            app:cornerRadius="6dp"
+            app:thumbBorder="3dp"
+            app:thumbBorderColor="@android:color/black" />
+
+        <com.divyanshu.colorseekbar.ColorSeekBar
+            android:id="@+id/whiteSeekBar"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:barHeight="12dp"
+            app:colorSeeds="@array/whiteSeekBarColors"
+            app:cornerRadius="6dp"
+            app:thumbBorder="3dp"
+            app:thumbBorderColor="@android:color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,9 +82,7 @@
                     android:id="@+id/colorDisplay2"
                     android:layout_width="50dp"
                     android:layout_height="50dp" />
-
             </LinearLayout>
-
         </LinearLayout>
 
 
@@ -106,7 +118,6 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="@string/right" />
-
             </RadioGroup>
 
             <Space
@@ -129,21 +140,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/both" />
             </LinearLayout>
-
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/white" />
-
-        <SeekBar
-            android:id="@+id/seekBar"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:max="255" />
     </LinearLayout>
 
     <LinearLayout
@@ -314,5 +311,4 @@
             android:inputType="number"
             tools:targetApi="o" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

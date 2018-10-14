@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import com.divyanshu.colorseekbar.ColorSeekBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.AnkoLogger
@@ -15,15 +15,15 @@ import org.jetbrains.anko.doAsync
 import java.net.URL
 import kotlin.properties.Delegates
 
+//TODO: Readme update
+//TODO: Fully material design
 
-class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeListener {
+class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChangeListener {
     var prefs: Prefs? = null
 
     var protocol: String by Delegates.notNull()
     var host: String by Delegates.notNull()
     var port: Int by Delegates.notNull()
-
-    var firstRun = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,37 +41,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
         hostEdit.setText(host)
         portEdit.setText(port.toString())
 
-        colorPickerView.setColorListener { c ->
-            if (!firstRun) {
-                when {
-                    both.isChecked -> {
-                        doAsync {
-                            URL(protocol, host, port, "/static_color/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
-                        }
-                        colorDisplay1.setBackgroundColor(c)
-                        colorDisplay2.setBackgroundColor(c)
-                    }
-
-                    color1.isChecked -> {
-                        val c2 = (colorDisplay2.background as ColorDrawable).color
-                        doAsync {
-                            URL(protocol, host, port, "/static_gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
-                        }
-                        colorDisplay1.setBackgroundColor(c)
-                    }
-
-                    color2.isChecked -> {
-                        val c2 = (colorDisplay1.background as ColorDrawable).color
-                        doAsync {
-                            URL(protocol, host, port, "/static_gradient/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
-                        }
-                        colorDisplay2.setBackgroundColor(c)
-                    }
-                }
-            } else {
-                firstRun = false
-            }
-        }
+        colorSeekBar.setOnColorChangeListener(this)
+        whiteSeekBar.setOnColorChangeListener(this)
 
         colorDisplay1.setOnClickListener {
             if (!both.isChecked) {
@@ -96,8 +67,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
                 color1.isChecked = true
             }
         }
-
-        seekBar!!.setOnSeekBarChangeListener(this)
 
         rainbowButton.setOnClickListener {
             doAsync {
@@ -208,16 +177,33 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
         })
     }
 
-    override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-        val c = progress.toString()
-        doAsync {
-            URL(protocol, host, port, "/static_color/$c/$c/$c").readText()
+    override fun onColorChangeListener(color: Int) {
+        when {
+            both.isChecked -> {
+                doAsync {
+                    URL(protocol, host, port, "/static_color/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}").readText()
+                }
+                colorDisplay1.setBackgroundColor(color)
+                colorDisplay2.setBackgroundColor(color)
+            }
+
+            color1.isChecked -> {
+                val c2 = (colorDisplay2.background as ColorDrawable).color
+                doAsync {
+                    URL(protocol, host, port, "/static_gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}").readText()
+                }
+                colorDisplay1.setBackgroundColor(color)
+            }
+
+            color2.isChecked -> {
+                val c2 = (colorDisplay1.background as ColorDrawable).color
+                doAsync {
+                    URL(protocol, host, port, "/static_gradient/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
+                }
+                colorDisplay2.setBackgroundColor(color)
+            }
         }
     }
-
-    override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
-    override fun onStopTrackingTouch(seekBar: SeekBar) {}
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
