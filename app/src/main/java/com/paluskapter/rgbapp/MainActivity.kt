@@ -25,33 +25,12 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
 
     var firstRun = true
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_color -> {
-                colorLayout.visibility = View.VISIBLE
-                modeLayout.visibility = View.INVISIBLE
-                settingsLayout.visibility = View.INVISIBLE
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_mode -> {
-                colorLayout.visibility = View.INVISIBLE
-                modeLayout.visibility = View.VISIBLE
-                settingsLayout.visibility = View.INVISIBLE
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_settings -> {
-                colorLayout.visibility = View.INVISIBLE
-                modeLayout.visibility = View.INVISIBLE
-                settingsLayout.visibility = View.VISIBLE
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        navigation.selectedItemId = R.id.navigation_mode
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         prefs = Prefs(this)
         protocol = prefs!!.protocol
@@ -62,10 +41,63 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
         hostEdit.setText(host)
         portEdit.setText(port.toString())
 
+        colorPickerView.setColorListener { c ->
+            if (!firstRun) {
+                when {
+                    both.isChecked -> {
+                        doAsync {
+                            URL(protocol, host, port, "/static_color/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+                        }
+                        colorDisplay1.setBackgroundColor(c)
+                        colorDisplay2.setBackgroundColor(c)
+                    }
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+                    color1.isChecked -> {
+                        val c2 = (colorDisplay2.background as ColorDrawable).color
+                        doAsync {
+                            URL(protocol, host, port, "/static_gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
+                        }
+                        colorDisplay1.setBackgroundColor(c)
+                    }
 
-        navigation.selectedItemId = R.id.navigation_mode
+                    color2.isChecked -> {
+                        val c2 = (colorDisplay1.background as ColorDrawable).color
+                        doAsync {
+                            URL(protocol, host, port, "/static_gradient/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
+                        }
+                        colorDisplay2.setBackgroundColor(c)
+                    }
+                }
+            } else {
+                firstRun = false
+            }
+        }
+
+        colorDisplay1.setOnClickListener {
+            if (!both.isChecked) {
+                color1.isChecked = true
+            }
+        }
+
+        colorDisplay2.setOnClickListener {
+            if (!both.isChecked) {
+                color2.isChecked = true
+            }
+        }
+
+        both.setOnClickListener {
+            if (both.isChecked) {
+                color1.isEnabled = false
+                color2.isEnabled = false
+                colorgroup.clearCheck()
+            } else {
+                color1.isEnabled = true
+                color2.isEnabled = true
+                color1.isChecked = true
+            }
+        }
+
+        seekBar!!.setOnSeekBarChangeListener(this)
 
         rainbowButton.setOnClickListener {
             doAsync {
@@ -85,15 +117,21 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
             }
         }
 
-        voltageDropButton.setOnClickListener {
+        snakeColorButton.setOnClickListener {
             doAsync {
-                URL(protocol, host, port, "/voltage_drop").readText()
+                URL(protocol, host, port, "/snake_color").readText()
             }
         }
 
-        randomFadeButton.setOnClickListener {
+        snakeFadeButton.setOnClickListener {
             doAsync {
-                URL(protocol, host, port, "/random_fade").readText()
+                URL(protocol, host, port, "/snake_fade").readText()
+            }
+        }
+
+        snakeRainbowButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/snake_rainbow").readText()
             }
         }
 
@@ -103,15 +141,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
             }
         }
 
-        clearButton.setOnClickListener {
+        randomFadeButton.setOnClickListener {
             doAsync {
-                URL(protocol, host, port, "/clear").readText()
-            }
-        }
-
-        cometButton.setOnClickListener {
-            doAsync {
-                URL(protocol, host, port, "/comet").readText()
+                URL(protocol, host, port, "/random_fade").readText()
             }
         }
 
@@ -121,81 +153,21 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
             }
         }
 
+        voltageDropButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/voltage_drop").readText()
+            }
+        }
+
         musicButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/music").readText()
             }
         }
 
-        snakeButton.setOnClickListener {
+        clearButton.setOnClickListener {
             doAsync {
-                URL(protocol, host, port, "/snake").readText()
-            }
-        }
-
-        rainbowSnakeButton.setOnClickListener {
-            doAsync {
-                URL(protocol, host, port, "/snake_rainbow").readText()
-            }
-        }
-
-        seekBar!!.setOnSeekBarChangeListener(this)
-
-
-
-        colorPickerView.setColorListener { c ->
-            if (!firstRun) {
-                when {
-                    both.isChecked -> {
-                        doAsync {
-                            URL(protocol, host, port, "/instant_color/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
-                        }
-                        colorDisplay1.setBackgroundColor(c)
-                        colorDisplay2.setBackgroundColor(c)
-                    }
-
-                    color1.isChecked -> {
-                        val c2 = (colorDisplay2.background as ColorDrawable).color
-                        doAsync {
-                            URL(protocol, host, port, "/gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}").readText()
-                        }
-                        colorDisplay1.setBackgroundColor(c)
-                    }
-
-                    color2.isChecked -> {
-                        val c2 = (colorDisplay1.background as ColorDrawable).color
-                        doAsync {
-                            URL(protocol, host, port, "/gradient/${Color.red(c)}/${Color.green(c)}/${Color.blue(c)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
-                        }
-                        colorDisplay2.setBackgroundColor(c)
-                    }
-                }
-            } else {
-                firstRun = false
-            }
-        }
-
-        both.setOnClickListener {
-            if (both.isChecked) {
-                color1.isEnabled = false
-                color2.isEnabled = false
-                colorgroup.clearCheck()
-            } else {
-                color1.isEnabled = true
-                color2.isEnabled = true
-                color1.isChecked = true
-            }
-        }
-
-        colorDisplay1.setOnClickListener {
-            if (!both.isChecked) {
-                color1.isChecked = true
-            }
-        }
-
-        colorDisplay2.setOnClickListener {
-            if (!both.isChecked) {
-                color2.isChecked = true
+                URL(protocol, host, port, "/clear").readText()
             }
         }
 
@@ -239,11 +211,35 @@ class MainActivity : AppCompatActivity(), AnkoLogger, SeekBar.OnSeekBarChangeLis
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         val c = progress.toString()
         doAsync {
-            URL(protocol, host, port, "/instant_color/$c/$c/$c").readText()
+            URL(protocol, host, port, "/static_color/$c/$c/$c").readText()
         }
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
     override fun onStopTrackingTouch(seekBar: SeekBar) {}
+
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        when (item.itemId) {
+            R.id.navigation_color -> {
+                colorLayout.visibility = View.VISIBLE
+                modeLayout.visibility = View.INVISIBLE
+                settingsLayout.visibility = View.INVISIBLE
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_mode -> {
+                colorLayout.visibility = View.INVISIBLE
+                modeLayout.visibility = View.VISIBLE
+                settingsLayout.visibility = View.INVISIBLE
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_settings -> {
+                colorLayout.visibility = View.INVISIBLE
+                modeLayout.visibility = View.INVISIBLE
+                settingsLayout.visibility = View.VISIBLE
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
 }
