@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navigation.selectedItemId = R.id.navigation_mode
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.selectedItemId = R.id.navigation_mode
 
         prefs = Prefs(this)
         protocol = prefs!!.protocol
