@@ -173,6 +173,29 @@
                 android:text="@string/rainbow_fade" />
 
             <Button
+                android:id="@+id/strobeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/strobe" />
+
+            <Button
+                android:id="@+id/randomFadeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/random_fade" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
                 android:id="@+id/snakeColorButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -192,29 +215,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="@string/snake_rainbow" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/strobeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/strobe" />
-
-            <Button
-                android:id="@+id/randomFadeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/random_fade" />
 
             <Button
                 android:id="@+id/fireButton"
@@ -222,21 +222,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:text="@string/fire" />
-
-            <Button
-                android:id="@+id/voltageDropButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:text="@string/voltage_drop" />
-
-            <Button
-                android:id="@+id/musicButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:enabled="false"
-                android:text="@string/music" />
 
             <Button
                 android:id="@+id/clearButton"

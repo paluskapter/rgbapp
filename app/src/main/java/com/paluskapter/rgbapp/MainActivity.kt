@@ -86,6 +86,18 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
             }
         }
 
+        strobeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/strobe").readText()
+            }
+        }
+
+        randomFadeButton.setOnClickListener {
+            doAsync {
+                URL(protocol, host, port, "/random_fade").readText()
+            }
+        }
+
         snakeColorButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/snake_color").readText()
@@ -104,33 +116,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
             }
         }
 
-        strobeButton.setOnClickListener {
-            doAsync {
-                URL(protocol, host, port, "/strobe/300").readText()
-            }
-        }
-
-        randomFadeButton.setOnClickListener {
-            doAsync {
-                URL(protocol, host, port, "/random_fade").readText()
-            }
-        }
-
         fireButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/fire").readText()
-            }
-        }
-
-        voltageDropButton.setOnClickListener {
-            doAsync {
-                URL(protocol, host, port, "/voltage_drop").readText()
-            }
-        }
-
-        musicButton.setOnClickListener {
-            doAsync {
-                URL(protocol, host, port, "/music").readText()
             }
         }
 
