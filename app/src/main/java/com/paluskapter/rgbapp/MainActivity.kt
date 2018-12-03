@@ -15,9 +15,6 @@ import org.jetbrains.anko.doAsync
 import java.net.URL
 import kotlin.properties.Delegates
 
-//TODO: Readme update
-//TODO: Fully material design
-
 class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChangeListener {
     var prefs: Prefs? = null
 
