@@ -9,17 +9,17 @@ class Prefs(context: Context) {
     private val hostValue = "host"
     private val portValue = "port"
 
-    private val prefs: SharedPreferences = context.getSharedPreferences(prefsFilename, 0)
+    private val shared: SharedPreferences = context.getSharedPreferences(prefsFilename, 0)
 
     var protocol: String
-        get() = prefs.getString(protocolValue, "http")!!
-        set(value) = prefs.edit().putString(protocolValue, value).apply()
+        get() = shared.getString(protocolValue, "http")!!
+        set(value) = shared.edit().putString(protocolValue, value).apply()
 
     var host: String
-        get() = prefs.getString(hostValue, "")!!
-        set(value) = prefs.edit().putString(hostValue, value).apply()
+        get() = shared.getString(hostValue, "")!!
+        set(value) = shared.edit().putString(hostValue, value).apply()
 
     var port: Int
-        get() = prefs.getInt(portValue, 0)
-        set(value) = prefs.edit().putInt(portValue, value).apply()
+        get() = shared.getInt(portValue, 0)
+        set(value) = shared.edit().putInt(portValue, value).apply()
 }
