@@ -137,9 +137,9 @@
         android:id="@+id/modeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        android:layout_gravity="center_vertical"
         android:visibility="invisible"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -156,35 +156,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/rainbow" />
+                android:text="@string/rainbow"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/rainbowColorWipeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/rainbow_color_wipe" />
+                android:text="@string/rainbow_color_wipe"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/rainbowFadeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/rainbow_fade" />
+                android:text="@string/rainbow_fade"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/strobeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/strobe" />
+                android:text="@string/strobe"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/randomFadeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/random_fade" />
+                android:text="@string/random_fade"
+                android:textColor="@color/colorText" />
         </LinearLayout>
 
         <LinearLayout
@@ -200,35 +205,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/snake_color" />
+                android:text="@string/snake_color"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/snakeFadeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/snake_fade" />
+                android:text="@string/snake_fade"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/snakeRainbowButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/snake_rainbow" />
+                android:text="@string/snake_rainbow"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/fireButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/fire" />
+                android:text="@string/fire"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/clearButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/clear" />
+                android:text="@string/clear"
+                android:textColor="@color/colorText" />
         </LinearLayout>
     </LinearLayout>
 

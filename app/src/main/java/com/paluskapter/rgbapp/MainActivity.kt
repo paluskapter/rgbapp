@@ -9,7 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.divyanshu.colorseekbar.ColorSeekBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.paluskapter.rgbapp.databinding.ActivityMainBinding
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.doAsync
 import java.net.URL
@@ -22,114 +22,118 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
     var host: String by Delegates.notNull()
     var port: Int by Delegates.notNull()
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        navigation.selectedItemId = R.id.navigation_mode
+        binding.navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        binding.navigation.selectedItemId = R.id.navigation_mode
 
         prefs = Prefs(this)
         protocol = prefs!!.protocol
         host = prefs!!.host
         port = prefs!!.port
 
-        protocolEdit.setText(protocol)
-        hostEdit.setText(host)
-        portEdit.setText(port.toString())
+        binding.protocolEdit.setText(protocol)
+        binding.hostEdit.setText(host)
+        binding.portEdit.setText(port.toString())
 
-        colorSeekBar.setOnColorChangeListener(this)
-        whiteSeekBar.setOnColorChangeListener(this)
+        binding.colorSeekBar.setOnColorChangeListener(this)
+        binding.whiteSeekBar.setOnColorChangeListener(this)
 
-        colorDisplay1.setOnClickListener {
-            if (!both.isChecked) {
-                color1.isChecked = true
+        binding.colorDisplay1.setOnClickListener {
+            if (!binding.both.isChecked) {
+                binding.color1.isChecked = true
             }
         }
 
-        colorDisplay2.setOnClickListener {
-            if (!both.isChecked) {
-                color2.isChecked = true
+        binding.colorDisplay2.setOnClickListener {
+            if (!binding.both.isChecked) {
+                binding.color2.isChecked = true
             }
         }
 
-        both.setOnClickListener {
-            if (both.isChecked) {
-                color1.isEnabled = false
-                color2.isEnabled = false
-                colorgroup.clearCheck()
+        binding.both.setOnClickListener {
+            if (binding.both.isChecked) {
+                binding.color1.isEnabled = false
+                binding.color2.isEnabled = false
+                binding.colorgroup.clearCheck()
             } else {
-                color1.isEnabled = true
-                color2.isEnabled = true
-                color1.isChecked = true
+                binding.color1.isEnabled = true
+                binding.color2.isEnabled = true
+                binding.color1.isChecked = true
             }
         }
 
-        rainbowButton.setOnClickListener {
+        binding.rainbowButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/rainbow").readText()
             }
         }
 
-        rainbowColorWipeButton.setOnClickListener {
+        binding.rainbowColorWipeButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/rainbow_color_wipe").readText()
             }
         }
 
-        rainbowFadeButton.setOnClickListener {
+        binding.rainbowFadeButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/rainbow_fade").readText()
             }
         }
 
-        strobeButton.setOnClickListener {
+        binding.strobeButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/strobe").readText()
             }
         }
 
-        randomFadeButton.setOnClickListener {
+        binding.randomFadeButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/random_fade").readText()
             }
         }
 
-        snakeColorButton.setOnClickListener {
+        binding.snakeColorButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/snake_color").readText()
             }
         }
 
-        snakeFadeButton.setOnClickListener {
+        binding.snakeFadeButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/snake_fade").readText()
             }
         }
 
-        snakeRainbowButton.setOnClickListener {
+        binding.snakeRainbowButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/snake_rainbow").readText()
             }
         }
 
-        fireButton.setOnClickListener {
+        binding.fireButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/fire").readText()
             }
         }
 
-        clearButton.setOnClickListener {
+        binding.clearButton.setOnClickListener {
             doAsync {
                 URL(protocol, host, port, "/clear").readText()
             }
         }
 
-        protocolEdit.addTextChangedListener(object : TextWatcher {
+        binding.protocolEdit.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val newText = protocolEdit.text.toString()
+                val newText = binding.protocolEdit.text.toString()
                 prefs!!.protocol = newText
                 protocol = newText
             }
@@ -137,11 +141,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
             override fun afterTextChanged(p0: Editable?) {}
         })
 
-        hostEdit.addTextChangedListener(object : TextWatcher {
+        binding.hostEdit.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val newText = hostEdit.text.toString()
+                val newText = binding.hostEdit.text.toString()
                 prefs!!.host = newText
                 host = newText
             }
@@ -149,11 +153,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
             override fun afterTextChanged(p0: Editable?) {}
         })
 
-        portEdit.addTextChangedListener(object : TextWatcher {
+        binding.portEdit.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val newText = portEdit.text.toString().toInt()
+                val newText = binding.portEdit.text.toString().toInt()
                 prefs!!.port = newText
                 port = newText
             }
@@ -164,28 +168,28 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
 
     override fun onColorChangeListener(color: Int) {
         when {
-            both.isChecked -> {
+            binding.both.isChecked -> {
                 doAsync {
                     URL(protocol, host, port, "/static_color/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}").readText()
                 }
-                colorDisplay1.setBackgroundColor(color)
-                colorDisplay2.setBackgroundColor(color)
+                binding.colorDisplay1.setBackgroundColor(color)
+                binding.colorDisplay2.setBackgroundColor(color)
             }
 
-            color1.isChecked -> {
-                val c2 = (colorDisplay2.background as ColorDrawable).color
+            binding.color1.isChecked -> {
+                val c2 = (binding.colorDisplay2.background as ColorDrawable).color
                 doAsync {
                     URL(protocol, host, port, "/static_gradient/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}").readText()
                 }
-                colorDisplay1.setBackgroundColor(color)
+                binding.colorDisplay1.setBackgroundColor(color)
             }
 
-            color2.isChecked -> {
-                val c2 = (colorDisplay1.background as ColorDrawable).color
+            binding.color2.isChecked -> {
+                val c2 = (binding.colorDisplay1.background as ColorDrawable).color
                 doAsync {
                     URL(protocol, host, port, "/static_gradient/${Color.red(color)}/${Color.green(color)}/${Color.blue(color)}/${Color.red(c2)}/${Color.green(c2)}/${Color.blue(c2)}").readText()
                 }
-                colorDisplay2.setBackgroundColor(color)
+                binding.colorDisplay2.setBackgroundColor(color)
             }
         }
     }
@@ -193,21 +197,21 @@ class MainActivity : AppCompatActivity(), AnkoLogger, ColorSeekBar.OnColorChange
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_color -> {
-                colorLayout.visibility = View.VISIBLE
-                modeLayout.visibility = View.INVISIBLE
-                settingsLayout.visibility = View.INVISIBLE
+                binding.colorLayout.visibility = View.VISIBLE
+                binding.modeLayout.visibility = View.INVISIBLE
+                binding.settingsLayout.visibility = View.INVISIBLE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_mode -> {
-                colorLayout.visibility = View.INVISIBLE
-                modeLayout.visibility = View.VISIBLE
-                settingsLayout.visibility = View.INVISIBLE
+                binding.colorLayout.visibility = View.INVISIBLE
+                binding.modeLayout.visibility = View.VISIBLE
+                binding.settingsLayout.visibility = View.INVISIBLE
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_settings -> {
-                colorLayout.visibility = View.INVISIBLE
-                modeLayout.visibility = View.INVISIBLE
-                settingsLayout.visibility = View.VISIBLE
+                binding.colorLayout.visibility = View.INVISIBLE
+                binding.modeLayout.visibility = View.INVISIBLE
+                binding.settingsLayout.visibility = View.VISIBLE
                 return@OnNavigationItemSelectedListener true
             }
         }

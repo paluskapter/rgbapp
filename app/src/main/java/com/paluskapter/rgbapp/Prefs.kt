@@ -4,22 +4,22 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class Prefs(context: Context) {
-    val PREFS_FILENAME = "com.paluskapter.rgbapp.prefs"
-    val PROTOCOL = "protocol"
-    val HOST = "host"
-    val PORT = "port"
+    private val prefsFilename = "com.paluskapter.rgbapp.prefs"
+    private val protocolValue = "protocol"
+    private val hostValue = "host"
+    private val portValue = "port"
 
-    val prefs: SharedPreferences = context.getSharedPreferences(PREFS_FILENAME, 0);
+    private val prefs: SharedPreferences = context.getSharedPreferences(prefsFilename, 0)
 
     var protocol: String
-        get() = prefs.getString(PROTOCOL, "http")!!
-        set(value) = prefs.edit().putString(PROTOCOL, value).apply()
+        get() = prefs.getString(protocolValue, "http")!!
+        set(value) = prefs.edit().putString(protocolValue, value).apply()
 
     var host: String
-        get() = prefs.getString(HOST, "")!!
-        set(value) = prefs.edit().putString(HOST, value).apply()
+        get() = prefs.getString(hostValue, "")!!
+        set(value) = prefs.edit().putString(hostValue, value).apply()
 
     var port: Int
-        get() = prefs.getInt(PORT, 0)
-        set(value) = prefs.edit().putInt(PORT, value).apply()
+        get() = prefs.getInt(portValue, 0)
+        set(value) = prefs.edit().putInt(portValue, value).apply()
 }
