@@ -1,22 +1,12 @@
-*.iml
-.gradle
-/local.properties
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-
-
-# Created by https://www.gitignore.io/api/android,androidstudio
+# Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio,gradle
+# Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio,gradle
 
 ### Android ###
 # Built application files
 *.apk
-!release/*.apk
+*.aar
 *.ap_
+*.aab
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -28,6 +18,8 @@
 bin/
 gen/
 out/
+#  Uncomment the following line in case you need and you don't have the release build type files in your app
+# release/
 
 # Gradle files
 .gradle/
@@ -56,17 +48,23 @@ captures/
 .idea/assetWizardSettings.xml
 .idea/dictionaries
 .idea/libraries
+# Android Studio 3 in .gitignore file.
 .idea/caches
+.idea/modules.xml
+# Comment next line if keeping position of elements in Navigation Editor is relevant for you
+.idea/navEditor.xml
 
 # Keystore files
-# Uncomment the following line if you do not want to check your keystore files in.
+# Uncomment the following lines if you do not want to check your keystore files in.
 #*.jks
+#*.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
+.cxx/
 
 # Google Services (e.g. APIs or Firebase)
-google-services.json
+# google-services.json
 
 # Freeline
 freeline.py
@@ -80,8 +78,40 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 
+# Version control
+vcs.xml
+
+# lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
+# lint/reports/
+
 ### Android Patch ###
 gen-external-apklibs
+output.json
+
+# Replacement of .externalNativeBuild directories introduced
+# with Android Studio 3.5.
+
+### Gradle ###
+.gradle
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
+# gradle/wrapper/gradle-wrapper.properties
+
+### Gradle Patch ###
+**/build/
 
 ### AndroidStudio ###
 # Covers files to be ignored for android development using Android Studio.
@@ -95,7 +125,6 @@ gen-external-apklibs
 # Generated files
 
 # Gradle files
-.gradle
 
 # Signing files
 .signing/
@@ -115,6 +144,13 @@ gen-external-apklibs
 *.ipr
 *~
 *.swp
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+# google-services.json
 
 # Android Patch
 
@@ -136,7 +172,6 @@ obj/
 .idea/copyright/profiles_settings.xml
 .idea/encodings.xml
 .idea/misc.xml
-.idea/modules.xml
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
@@ -145,6 +180,7 @@ obj/
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
+.idea/jarRepositories.xml
 
 # OS-specific files
 .DS_Store
@@ -192,5 +228,9 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+# End of https://www.toptal.com/developers/gitignore/api/android,androidstudio,gradle
 
-# End of https://www.gitignore.io/api/android,androidstudio
+gradle
+gradlew
+gradlew.bat
+
